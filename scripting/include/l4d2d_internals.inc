@@ -43,9 +43,9 @@
  *
  * @return				Handle to the l4d2_direct game config, or INVALID_HANDLE if not found.
  */
-stock Handle:L4D2Direct_GetGameConf()
+stock Handle L4D2Direct_GetGameConf()
 {
-	static Handle:g_hGameConf_l4d2dir = INVALID_HANDLE;
+	static Handle g_hGameConf_l4d2dir = INVALID_HANDLE;
 	if(g_hGameConf_l4d2dir == INVALID_HANDLE)
 	{
 		g_hGameConf_l4d2dir = LoadGameConfigFile("l4d2_direct");
@@ -58,9 +58,9 @@ stock Handle:L4D2Direct_GetGameConf()
  *
  * @return				Address of the global CDirector, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetCDirector()
+stock Address L4D2Direct_GetCDirector()
 {
-	static Address:TheDirector = Address_Null;
+	static Address TheDirector = Address_Null;
 	if(TheDirector == Address_Null)
 	{
 		TheDirector = GameConfGetAddress(L4D2Direct_GetGameConf(), "CDirector");
@@ -73,15 +73,15 @@ stock Address:L4D2Direct_GetCDirector()
  *
  * @return				Address of the global CDirectorVersusMode, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetCDirectorVersusMode()
+stock Address L4D2Direct_GetCDirectorVersusMode()
 {
-	static Address:pVersusModeDirector = Address_Null;
+	static Address pVersusModeDirector = Address_Null;
 	if(pVersusModeDirector == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode");
 		if(offs == -1) return Address_Null;
-		pVersusModeDirector = L4D2Direct_GetCDirector() + Address:offs;
-		pVersusModeDirector = Address:LoadFromAddress( pVersusModeDirector , NumberType_Int32 );
+		pVersusModeDirector = L4D2Direct_GetCDirector() + view_as<Address>(offs);
+		pVersusModeDirector = view_as<Address>(LoadFromAddress( pVersusModeDirector , NumberType_Int32 ));
 	}
 	return pVersusModeDirector;
 }
@@ -91,15 +91,15 @@ stock Address:L4D2Direct_GetCDirectorVersusMode()
  *
  * @return				Address of the global CDirectorScavengeMode, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetCDirectorScavengeMode()
+stock Address L4D2Direct_GetCDirectorScavengeMode()
 {
-	static Address:pScavengeModeDirector = Address_Null;
+	static Address pScavengeModeDirector = Address_Null;
 	if(pScavengeModeDirector == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorScavengeMode");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorScavengeMode");
 		if(offs == -1) return Address_Null;
-		pScavengeModeDirector = L4D2Direct_GetCDirector() + Address:offs;
-		pScavengeModeDirector = Address:LoadFromAddress( pScavengeModeDirector , NumberType_Int32 );
+		pScavengeModeDirector = L4D2Direct_GetCDirector() + view_as<Address>(offs);
+		pScavengeModeDirector = view_as<Address>(LoadFromAddress( pScavengeModeDirector , NumberType_Int32 ));
 	}
 	return pScavengeModeDirector;
 }
@@ -109,9 +109,9 @@ stock Address:L4D2Direct_GetCDirectorScavengeMode()
  *
  * @return				Address of the global TheNavMesh, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetTerrorNavMesh()
+stock Address L4D2Direct_GetTerrorNavMesh()
 {
-	static Address:TheNavMesh = Address_Null;
+	static Address TheNavMesh = Address_Null;
 	if(TheNavMesh == Address_Null)
 	{
 		TheNavMesh = GameConfGetAddress(L4D2Direct_GetGameConf(), "TerrorNavMesh");
@@ -124,14 +124,14 @@ stock Address:L4D2Direct_GetTerrorNavMesh()
  *
  * @return				Address of the TankCount variable, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetTankCountAddr()
+stock Address L4D2Direct_GetTankCountAddr()
 {
-	static Address:pTankCount = Address_Null;
-	if(pTankCount == Address_Null) 
+	static Address pTankCount = Address_Null;
+	if(pTankCount == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::m_iTankCount");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::m_iTankCount");
 		if(offs == -1) return Address_Null;
-		pTankCount = L4D2Direct_GetCDirector() + Address:offs;
+		pTankCount = L4D2Direct_GetCDirector() + view_as<Address>(offs);
 	}
 	return pTankCount;
 }
@@ -141,14 +141,14 @@ stock Address:L4D2Direct_GetTankCountAddr()
  *
  * @return				Address of m_iTankPassedCount variable, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetTankPassedCountAddr()
+stock Address L4D2Direct_GetTankPassedCountAddr()
 {
-	static Address:pTankPassedCount = Address_Null;
+	static Address pTankPassedCount = Address_Null;
 	if (pTankPassedCount == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::m_iTankPassedCount");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::m_iTankPassedCount");
 		if (offs == -1) return Address_Null;
-		pTankPassedCount = L4D2Direct_GetCDirector() + Address:offs;
+		pTankPassedCount = L4D2Direct_GetCDirector() + view_as<Address>(offs);
 	}
 	return pTankPassedCount;
 }
@@ -158,14 +158,14 @@ stock Address:L4D2Direct_GetTankPassedCountAddr()
  *
  * @return				Address of the CampaignScores array, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetVSCampaignScoresAddr()
+stock Address L4D2Direct_GetVSCampaignScoresAddr()
 {
-	static Address:pCampaignScores = Address_Null;
+	static Address pCampaignScores = Address_Null;
 	if(pCampaignScores == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_iCampaignScores");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_iCampaignScores");
 		if(offs == -1) return Address_Null;
-		pCampaignScores = L4D2Direct_GetCDirectorVersusMode() + Address:offs;
+		pCampaignScores = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pCampaignScores;
 }
@@ -175,14 +175,14 @@ stock Address:L4D2Direct_GetVSCampaignScoresAddr()
  *
  * @return				Address of the TankFlow array, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetVSTankFlowAddr()
+stock Address L4D2Direct_GetVSTankFlowAddr()
 {
-	static Address:pTankFlowPercent = Address_Null;
+	static Address pTankFlowPercent = Address_Null;
 	if(pTankFlowPercent == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_fTankSpawnFlowPercent");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_fTankSpawnFlowPercent");
 		if(offs == -1) return Address_Null;
-		pTankFlowPercent = L4D2Direct_GetCDirectorVersusMode() + Address:offs;
+		pTankFlowPercent = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pTankFlowPercent;
 }
@@ -192,14 +192,14 @@ stock Address:L4D2Direct_GetVSTankFlowAddr()
  *
  * @return				Address of the TankToSpawn array, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GeVSTankToSpawnAddr()
+stock Address L4D2Direct_GeVSTankToSpawnAddr()
 {
-	static Address:pTankSpawnThisRound = Address_Null;
+	static Address pTankSpawnThisRound = Address_Null;
 	if(pTankSpawnThisRound == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_bTankThisRound");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_bTankThisRound");
 		if(offs == -1) return Address_Null;
-		pTankSpawnThisRound = L4D2Direct_GetCDirectorVersusMode() + Address:offs;
+		pTankSpawnThisRound = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pTankSpawnThisRound;
 }
@@ -209,14 +209,14 @@ stock Address:L4D2Direct_GeVSTankToSpawnAddr()
  *
  * @return				Address of the WitchFlow array, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetVSWitchFlowAddr()
+stock Address L4D2Direct_GetVSWitchFlowAddr()
 {
-	static Address:pWitchFlowPercent = Address_Null;
+	static Address pWitchFlowPercent = Address_Null;
 	if(pWitchFlowPercent == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_fWitchSpawnFlowPercent");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_fWitchSpawnFlowPercent");
 		if(offs == -1) return Address_Null;
-		pWitchFlowPercent = L4D2Direct_GetCDirectorVersusMode() + Address:offs;
+		pWitchFlowPercent = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pWitchFlowPercent;
 }
@@ -226,14 +226,14 @@ stock Address:L4D2Direct_GetVSWitchFlowAddr()
  *
  * @return				Address of the WitchToSpawn array, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetVSWitchToSpawnAddr()
+stock Address L4D2Direct_GetVSWitchToSpawnAddr()
 {
-	static Address:pWitchSpawnThisRound = Address_Null;
+	static Address pWitchSpawnThisRound = Address_Null;
 	if(pWitchSpawnThisRound == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_bWitchThisRound");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::m_bWitchThisRound");
 		if(offs == -1) return Address_Null;
-		pWitchSpawnThisRound = L4D2Direct_GetCDirectorVersusMode() + Address:offs;
+		pWitchSpawnThisRound = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pWitchSpawnThisRound;
 }
@@ -243,14 +243,14 @@ stock Address:L4D2Direct_GetVSWitchToSpawnAddr()
  *
  * @return				Address of the MapMaxFlowDistance variable, or Address_Null on failure.
  */
-stock Address:L4D2Direct_GetMapMaxFlowDistanceAddr()
+stock Address L4D2Direct_GetMapMaxFlowDistanceAddr()
 {
-	static Address:pMapMaxFlowDistance = Address_Null;
+	static Address pMapMaxFlowDistance = Address_Null;
 	if(pMapMaxFlowDistance == Address_Null)
 	{
-		new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "TerrorNavMesh::m_fMapMaxFlowDistance");
+		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "TerrorNavMesh::m_fMapMaxFlowDistance");
 		if(offs == -1) return Address_Null;
-		pMapMaxFlowDistance = L4D2Direct_GetTerrorNavMesh() + Address:offs;
+		pMapMaxFlowDistance = L4D2Direct_GetTerrorNavMesh() + view_as<Address>(offs);
 	}
 	return pMapMaxFlowDistance;
 }
@@ -264,17 +264,17 @@ stock Address:L4D2Direct_GetMapMaxFlowDistanceAddr()
  * @param value output parameter for the retrieved value
  * @return bool
  */
-stock GetEntityValueFromOffset(entity, const String:offset[], NumberType:size, &value)
+stock bool GetEntityValueFromOffset(int entity, const char[] offset, NumberType size, int &value)
 {
-	new Address:pEntity = GetEntityAddress(entity);
-	if (pEntity == Address_Null)
+	Address pEntityGEVFO = GetEntityAddress(entity);
+	if (pEntityGEVFO == Address_Null)
 		return false;
-	
-	new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), offset);
+
+	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), offset);
 	if (offs == -1)
 		return false;
-	
-	value = LoadFromAddress(pEntity + Address:offs, size);
+
+	value = LoadFromAddress(pEntityGEVFO + view_as<Address>(offs), size);
 	return true;
 }
 
@@ -287,17 +287,16 @@ stock GetEntityValueFromOffset(entity, const String:offset[], NumberType:size, &
  * @param value value to store at the offset
  * @return bool
  */
-stock SetEntityValueFromOffset(entity, const String:offset[], NumberType:size, value)
+stock bool SetEntityValueFromOffset(int entity, const char[] offset, NumberType size, int value)
 {
-	new Address:pEntity = GetEntityAddress(entity);
-	if (pEntity == Address_Null)
+	Address pEntitySEVFO = GetEntityAddress(entity);
+	if (pEntitySEVFO == Address_Null)
 		return false;
-	
-	new offs = GameConfGetOffset(L4D2Direct_GetGameConf(), offset);
+
+	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), offset);
 	if (offs == -1)
 		return false;
-	
-	StoreToAddress(pEntity + Address:offs, value, size);
+
+	StoreToAddress(pEntitySEVFO + view_as<Address>(offs), value, size);
 	return true;
 }
-

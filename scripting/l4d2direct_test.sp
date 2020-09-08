@@ -1,3 +1,6 @@
+#pragma semicolon 1
+#pragma newdecls required
+
 #include <sourcemod>
 #include <l4d2_direct>
 
@@ -16,11 +19,11 @@ enum SIClass
 	SI_Tank
 };
 
-stock const String:g_sSIClassNames[SIClass][] = 
+stock const char g_sSIClassNames[SIClass][] =
 {	"", "Smoker", "Boomer", "Hunter", "Spitter", "Jockey", "Charger", "Witch", "Tank" };
 
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 	RegConsoleCmd("sm_addtest", addtest);
 	RegConsoleCmd("sm_timertest", timertest);
@@ -34,7 +37,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_myflowdist", myflowdist);
 }
 
-public Action:myflowdist(client, args)
+public Action myflowdist(int client, int args)
 {
 	if (client == 0)
 	{
@@ -42,114 +45,114 @@ public Action:myflowdist(client, args)
 		return;
 	}
 
-	new Float:dist = L4D2Direct_GetFlowDistance(client);
+	float dist = L4D2Direct_GetFlowDistance(client);
 	ReplyToCommand(client, "flowdist = %f", dist);
 }
 
-public Action:myflow(client, args)
+public Action myflow(int client, int args)
 {
 	if (client == 0)
 	{
 		ReplyToCommand(client, "Not the server bro");
 		return;
 	}
-	
-	new Float:pos[3];
+
+	float pos[3];
 	GetEntPropVector(client, Prop_Send, "m_vecOrigin", pos);
-	
-	new Address:pNavArea = L4D2Direct_GetTerrorNavArea(pos);
-	
+
+	Address pNavArea = L4D2Direct_GetTerrorNavArea(pos);
+
 	if (pNavArea == Address_Null)
 	{
 		ReplyToCommand(client, "You're no where");
 		return;
 	}
-	
-	new Float:flow = L4D2Direct_GetTerrorNavAreaFlow(pNavArea);
-	new prcnt = RoundToNearest((flow / L4D2Direct_GetMapMaxFlowDistance()) * 100.0);
+
+	float flow = L4D2Direct_GetTerrorNavAreaFlow(pNavArea);
+	int prcnt = RoundToNearest((flow / L4D2Direct_GetMapMaxFlowDistance()) * 100.0);
 	ReplyToCommand(client, "flow = %f (%d%%)", flow, prcnt);
 }
 
-public Action:mytickets(client, args)
+public Action mytickets(int client, int args)
 {
-	new tickets = L4D2Direct_GetTankTickets(client);
+	int tickets = L4D2Direct_GetTankTickets(client);
 	ReplyToCommand(client, "Your tank lottery tickets = %d", tickets);
 }
 
-public Action:myspawntimer(client,args)
+public Action myspawntimer(int client, int args)
 {
-	new CountdownTimer:spawnTimer = L4D2Direct_GetSpawnTimer(client);
-	
+	CountdownTimer spawnTimer = L4D2Direct_GetSpawnTimer(client);
+
 	if (spawnTimer != CTimer_Null)
 		CTimerReply(client, spawnTimer, "Spawn timer");
 	else
 		ReplyToCommand(client, "No timer");
-	
+
 	return Plugin_Handled;
 }
 
-public Action:myaddy(client,args)
+public Action myaddy(int client, int args)
 {
 	if(client == 0)
 	{
 		ReplyToCommand(client, "Sorry bro gotta be an entity");
 		return Plugin_Handled;
 	}
-	new Address:me = GetEntityAddress(client);
+	Address me = GetEntityAddress(client);
 	if(me == Address_Null)
 	{
 		ReplyToCommand(client, "Utter failure");
 		return Plugin_Handled;
 	}
-	new CountdownTimer:ctimer588 = CountdownTimer:(me+Address:11432);
-	new CountdownTimer:ctimer600 = CountdownTimer:(me+Address:11444);
+	CountdownTimer ctimer588 = view_as<CountdownTimer>(me+view_as<Address>(11432));
+	CountdownTimer ctimer600 = view_as<CountdownTimer>(me+view_as<Address>(11444));
 	CTimerReply(client, ctimer588, "ctimer588");
 	CTimerReply(client, ctimer600, "ctimer600");
 
 	return Plugin_Handled;
 }
 
-public Action:settank(client,args)
+public Action settank(int client, int args)
 {
-	static String:buffer[64];
+	static char buffer[64];
 	GetCmdArg(1, buffer, sizeof(buffer));
-	new Float:flow = StringToFloat(buffer);
+	float flow = StringToFloat(buffer);
 	L4D2Direct_SetVSTankFlowPercent(0, flow);
 	L4D2Direct_SetVSTankFlowPercent(1, flow);
 	ReplyToCommand(client, "Looks good? %.02f %.02f", L4D2Direct_GetVSTankFlowPercent(0)*100, L4D2Direct_GetVSTankFlowPercent(1)*100);
 	return Plugin_Handled;
 }
 
-public Action:addtest(client,args)
+public Action addtest(int client, int args)
 {
 	ReplyToCommand(client, "Tank count: %d", L4D2Direct_GetTankCount());
 	ReplyToCommand(client, "Campaign Scores[0]: %d", L4D2Direct_GetVSCampaignScore(0));
 	ReplyToCommand(client, "Campaign Scores[1]: %d", L4D2Direct_GetVSCampaignScore(1));
 	ReplyToCommand(client, "Map Max flow Distance: %f", L4D2Direct_GetMapMaxFlowDistance());
-	ReplyToCommand(client, "Tank spawn[0]: %s %f %f", 
-		L4D2Direct_GetVSTankToSpawnThisRound(0) ? "yes" : "no", 
-		L4D2Direct_GetVSTankFlowPercent(0), 
+	ReplyToCommand(client, "Tank spawn[0]: %s %f %f",
+		L4D2Direct_GetVSTankToSpawnThisRound(0) ? "yes" : "no",
+		L4D2Direct_GetVSTankFlowPercent(0),
 		L4D2Direct_GetVSTankFlowPercent(0)*L4D2Direct_GetMapMaxFlowDistance());
-	ReplyToCommand(client, "Tank spawn[1]: %s %f %f", 
-		L4D2Direct_GetVSTankToSpawnThisRound(1) ? "yes" : "no", 
-		L4D2Direct_GetVSTankFlowPercent(1), 
+	ReplyToCommand(client, "Tank spawn[1]: %s %f %f",
+		L4D2Direct_GetVSTankToSpawnThisRound(1) ? "yes" : "no",
+		L4D2Direct_GetVSTankFlowPercent(1),
 		L4D2Direct_GetVSTankFlowPercent(1)*L4D2Direct_GetMapMaxFlowDistance());
-	ReplyToCommand(client, "Witch spawn[0]: %s %f %f", 
-		L4D2Direct_GetVSWitchToSpawnThisRound(0) ? "yes" : "no", 
-		L4D2Direct_GetVSWitchFlowPercent(0), 
+	ReplyToCommand(client, "Witch spawn[0]: %s %f %f",
+		L4D2Direct_GetVSWitchToSpawnThisRound(0) ? "yes" : "no",
+		L4D2Direct_GetVSWitchFlowPercent(0),
 		L4D2Direct_GetVSWitchFlowPercent(0)*L4D2Direct_GetMapMaxFlowDistance());
-	ReplyToCommand(client, "Witch spawn[1]: %s %f %f", 
-		L4D2Direct_GetVSWitchToSpawnThisRound(1) ? "yes" : "no", 
-		L4D2Direct_GetVSWitchFlowPercent(1), 
+	ReplyToCommand(client, "Witch spawn[1]: %s %f %f",
+		L4D2Direct_GetVSWitchToSpawnThisRound(1) ? "yes" : "no",
+		L4D2Direct_GetVSWitchFlowPercent(1),
 		L4D2Direct_GetVSWitchFlowPercent(1)*L4D2Direct_GetMapMaxFlowDistance());
 
-	new CountdownTimer:VSStartTimer = L4D2Direct_GetVSStartTimer();
+	CountdownTimer VSStartTimer = L4D2Direct_GetVSStartTimer();
 	ReplyToCommand(client, "Saferoom opens in: %fs", CTimer_GetRemainingTime(VSStartTimer));
 
 	return Plugin_Handled;
 }
 
-stock CTimerReply(client, CountdownTimer:timer, const String:name[])
+stock void CTimerReply(int client, CountdownTimer timer, const char[] name)
 {
 	if(CTimer_HasStarted(timer))
 	{
@@ -161,7 +164,7 @@ stock CTimerReply(client, CountdownTimer:timer, const String:name[])
 	}
 }
 
-stock ITimerReply(client, IntervalTimer:timer, const String:name[])
+stock void ITimerReply(int client, IntervalTimer timer, const char[] name)
 {
 	if(ITimer_HasStarted(timer))
 	{
@@ -173,38 +176,39 @@ stock ITimerReply(client, IntervalTimer:timer, const String:name[])
 	}
 }
 
-public Action:timertest(client,args)
+public Action timertest(int client, int args)
 {
 	CTimerReply(client, L4D2Direct_GetMobSpawnTimer(), "MobSpawn");
 	CTimerReply(client, L4D2Direct_GetVSStartTimer(), "VersusStart");
-	
+
 	CTimerReply(client, L4D2Direct_GetScavengeRoundSetupTimer(), "ScavRoundStart");
 	CTimerReply(client, L4D2Direct_GetScavengeOvertimeGraceTimer(), "ScavOvertime");
 	return Plugin_Handled;
 }
 
-public Action:sitimers(client, args)
+public Action sitimers(int client, int args)
 {
 	ReplyToCommand(client, "SI Death Timers:");
-	for(new i = _:SI_Smoker; i <= _:SI_Charger; i++)
+	int i = 0;
+	for(i = view_as<int>(SI_Smoker); i <= view_as<int>(SI_Charger); i++)
 	{
-		ITimerReply(client, L4D2Direct_GetSIClassDeathTimer(i), g_sSIClassNames[SIClass:i]);
+		ITimerReply(client, L4D2Direct_GetSIClassDeathTimer(i), g_sSIClassNames[view_as<SIClass>(i)]);
 	}
 	ReplyToCommand(client, "SI Spawn Timers:");
-	for(new i = _:SI_Smoker; i <= _:SI_Charger; i++)
+	for(i = view_as<int>(SI_Smoker); i <= view_as<int>(SI_Charger); i++)
 	{
-		CTimerReply(client, L4D2Direct_GetSIClassSpawnTimer(i), g_sSIClassNames[SIClass:i]);
+		CTimerReply(client, L4D2Direct_GetSIClassSpawnTimer(i), g_sSIClassNames[view_as<SIClass>(i)]);
 	}
-	
+
 	return Plugin_Handled;
 }
 
-public Action:dumpglobals(client, args)
+public Action dumpglobals(int client, int args)
 {
-	decl String:fnameBuf[64];
-	new Handle:curfile;
-	new len;
-	
+	char fnameBuf[64];
+	Handle curfile;
+	int len;
+
 	Format(fnameBuf, sizeof(fnameBuf), "CDirector_%d.bin", GetTime());
 	curfile = OpenFile(fnameBuf, "wb");
 	len = GameConfGetOffset(L4D2Direct_GetGameConf(), "sizeof_CDirector");
@@ -215,7 +219,7 @@ public Action:dumpglobals(client, args)
 	curfile = OpenFile(fnameBuf, "wb");
 	len = GameConfGetOffset(L4D2Direct_GetGameConf(), "sizeof_CDirectorVersusMode");
 	DumpGlobalToFile(L4D2Direct_GetCDirectorVersusMode(), len, curfile);
-	CloseHandle(curfile);	
+	CloseHandle(curfile);
 
 	Format(fnameBuf, sizeof(fnameBuf), "CDirectorScavengeMode_%d.bin", GetTime());
 	curfile = OpenFile(fnameBuf, "wb");
@@ -232,18 +236,18 @@ public Action:dumpglobals(client, args)
 	return Plugin_Handled;
 }
 
-stock bool:DumpGlobalToFile(Address:pGlobal, size, Handle:file)
+stock bool DumpGlobalToFile(Address pGlobal, int size, Handle file)
 {
-	new buffer[size];
+	char[] buffer = new char[size];
 	DumpGlobal(pGlobal, buffer, size);
-	return WriteFile(file, buffer, size, 1);
+	return WriteFileString(file, buffer, true);
 }
 
-stock DumpGlobal(Address:pGlobal, buffer[], size)
+stock void DumpGlobal(Address pGlobal, char[] buffer, int size)
 {
-	new Address:pEnd = pGlobal + Address:size;
-	new Address:pCur = pGlobal;
-	new loc=0;
+	Address pEnd = pGlobal + view_as<Address>(size);
+	Address pCur = pGlobal;
+	int loc=0;
 	while(pCur < pEnd)
 	{
 		buffer[loc++] = LoadFromAddress(pCur++, NumberType_Int8);
