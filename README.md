@@ -1,5 +1,5 @@
-l4d2_direct
-===========
+l4d2_direct (SM 1.9+)
+=====================
 
 This project aims to expose Director and other variables to sourcepawn scripters.
 
