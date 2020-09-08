@@ -199,7 +199,7 @@ stock void L4D2Direct_SetVSCampaignScore( int teamNumber , int score )
  * @note Calls CDirector::ClearScavengeScores and CDirectorVersusMode::ClearTeamScoresNonVirtual, so you don't have to worry about game modes yourself
  * @noreturn
  */
-stock void L4D2_Direct_ResetTeamScores()
+stock void L4D2Direct_ResetTeamScores()
 {
     static Handle ClearTeamScoresSDKCall = INVALID_HANDLE;
     if(ClearTeamScoresSDKCall == INVALID_HANDLE)
@@ -846,7 +846,7 @@ stock void L4D2Direct_DoAnimationEvent(int client, int event)
  * @param resetScore
  * @noreturn
  */
-stock void L4D2_Direct_ChangeLevel(const char[] mapname, bool resetScore=false)
+stock void L4D2Direct_ChangeLevel(const char[] mapname, bool resetScore=false)
 {
     static Handle ChangeLevelSDKCall = INVALID_HANDLE;
     if(ChangeLevelSDKCall == INVALID_HANDLE)
@@ -861,7 +861,7 @@ stock void L4D2_Direct_ChangeLevel(const char[] mapname, bool resetScore=false)
     }
     if(resetScore)
     {
-    	L4D2_Direct_ResetTeamScores();
+    	L4D2Direct_ResetTeamScores();
     }
     SDKCall(ChangeLevelSDKCall, L4D2Direct_GetCDirector(), mapname);
 }
@@ -874,7 +874,7 @@ stock void L4D2_Direct_ChangeLevel(const char[] mapname, bool resetScore=false)
  * @param mission
  * @noreturn
  */
-stock void L4D2_Direct_ChangeMission(const char[] mission)
+stock void L4D2Direct_ChangeMission(const char[] mission)
 {
     static Handle ChangeMissionSDKCall = INVALID_HANDLE;
     if(ChangeMissionSDKCall == INVALID_HANDLE)
@@ -899,7 +899,7 @@ stock void L4D2_Direct_ChangeMission(const char[] mission)
  * @param maxlength
  * @noreturn
  */
-stock void L4D2_Direct_GetGameModeBase(char[] buffer, int maxlength)
+stock void L4D2Direct_GetGameModeBase(char[] buffer, int maxlength)
 {
     static Handle GetGameModeBaseSDKCall = INVALID_HANDLE;
     if(GetGameModeBaseSDKCall == INVALID_HANDLE)

@@ -12,12 +12,12 @@ Code is released under GPLv3 as with every other SourcePawn project.
 Changelog
 =====================
 
-2.1.0 (09-08-2020)
+2.1.1 (09-08-2020)
 ---------------------
-- Added `L4D2_Direct_GetGameModeBase` (Linux-only). Allows to get the base game mode of the current `mp_gamemode`.
-- Added `L4D2_Direct_ResetTeamScores` (props to [LuxLuma](https://github.com/LuxLuma) for Windows signature).
-- Added `L4D2_Direct_ChangeLevel` (props to [LuxLuma](https://github.com/LuxLuma) for Windows signature).
-- Added `L4D2_Direct_ChangeMission` (Linux-only). Allows to change campaigns via Director with proper initialization and cleanup.
+- Added `L4D2Direct_GetGameModeBase` (Linux-only). Allows to get the base game mode of the current `mp_gamemode`.
+- Added `L4D2Direct_ResetTeamScores` (props to [LuxLuma](https://github.com/LuxLuma) for Windows signature).
+- Added `L4D2Direct_ChangeLevel` (props to [LuxLuma](https://github.com/LuxLuma) for Windows signature).
+- Added `L4D2Direct_ChangeMission` (Linux-only). Allows to change campaigns via Director with proper initialization and cleanup.
 
 2.0.0 (08-30-2020)
 ---------------------
