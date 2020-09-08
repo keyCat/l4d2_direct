@@ -51,7 +51,7 @@
  */
 stock int L4D2Direct_GetTankCount()
 {
-	return LoadFromAddress( L4D2Direct_GetTankCountAddr() , NumberType_Int32 );
+    return LoadFromAddress( L4D2Direct_GetTankCountAddr() , NumberType_Int32 );
 }
 
 /**
@@ -65,14 +65,14 @@ stock int L4D2Direct_GetTankCount()
  */
 stock CountdownTimer L4D2Direct_GetMobSpawnTimer()
 {
-	static Address pMobSpawnTimer = Address_Null;
-	if(pMobSpawnTimer == Address_Null)
-	{
-		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::MobSpawnTimer");
-		if(offs == -1) return CTimer_Null;
-		pMobSpawnTimer = L4D2Direct_GetCDirector() + view_as<Address>(offs);
-	}
-	return view_as<CountdownTimer>(pMobSpawnTimer);
+    static Address pMobSpawnTimer = Address_Null;
+    if(pMobSpawnTimer == Address_Null)
+    {
+        int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::MobSpawnTimer");
+        if(offs == -1) return CTimer_Null;
+        pMobSpawnTimer = L4D2Direct_GetCDirector() + view_as<Address>(offs);
+    }
+    return view_as<CountdownTimer>(pMobSpawnTimer);
 }
 
 /**
@@ -86,17 +86,17 @@ stock CountdownTimer L4D2Direct_GetMobSpawnTimer()
  */
 stock IntervalTimer L4D2Direct_GetSIClassDeathTimer(int class)
 {
-	// Should be between smoker and charger
-	if(class < 1 || class > 6) return ITimer_Null;
+    // Should be between smoker and charger
+    if(class < 1 || class > 6) return ITimer_Null;
 
-	static Address pSIDeathTimers = Address_Null;
-	if(pSIDeathTimers == Address_Null)
-	{
-		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::ClassDeathTimers");
-		if(offs == -1) return ITimer_Null;
-		pSIDeathTimers = L4D2Direct_GetCDirector() + view_as<Address>(offs);
-	}
-	return view_as<IntervalTimer>((view_as<int>(pSIDeathTimers) + ((class - 1) * SIZEOF_ITIMER)));
+    static Address pSIDeathTimers = Address_Null;
+    if(pSIDeathTimers == Address_Null)
+    {
+        int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::ClassDeathTimers");
+        if(offs == -1) return ITimer_Null;
+        pSIDeathTimers = L4D2Direct_GetCDirector() + view_as<Address>(offs);
+    }
+    return view_as<IntervalTimer>((view_as<int>(pSIDeathTimers) + ((class - 1) * SIZEOF_ITIMER)));
 }
 
 /**
@@ -110,17 +110,17 @@ stock IntervalTimer L4D2Direct_GetSIClassDeathTimer(int class)
  */
 stock CountdownTimer L4D2Direct_GetSIClassSpawnTimer(int class)
 {
-	// Should be between smoker and charger
-	if(class < 1 || class > 6) return CTimer_Null;
+    // Should be between smoker and charger
+    if(class < 1 || class > 6) return CTimer_Null;
 
-	static Address pSISpawnTimers = Address_Null;
-	if(pSISpawnTimers == Address_Null)
-	{
-		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::ClassSpawnTimers");
-		if(offs == -1) return CTimer_Null;
-		pSISpawnTimers = L4D2Direct_GetCDirector() + view_as<Address>(offs);
-	}
-	return view_as<CountdownTimer>(view_as<int>(pSISpawnTimers) + ((class - 1) * SIZEOF_CTIMER));
+    static Address pSISpawnTimers = Address_Null;
+    if(pSISpawnTimers == Address_Null)
+    {
+        int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirector::ClassSpawnTimers");
+        if(offs == -1) return CTimer_Null;
+        pSISpawnTimers = L4D2Direct_GetCDirector() + view_as<Address>(offs);
+    }
+    return view_as<CountdownTimer>(view_as<int>(pSISpawnTimers) + ((class - 1) * SIZEOF_CTIMER));
 }
 
 /**
@@ -134,7 +134,7 @@ stock CountdownTimer L4D2Direct_GetSIClassSpawnTimer(int class)
  */
 stock int L4D2Direct_GetTankPassedCount()
 {
-	return LoadFromAddress(L4D2Direct_GetTankPassedCountAddr(), NumberType_Int32);
+    return LoadFromAddress(L4D2Direct_GetTankPassedCountAddr(), NumberType_Int32);
 }
 
 /**
@@ -149,7 +149,7 @@ stock int L4D2Direct_GetTankPassedCount()
  */
 stock void L4D2Direct_SetTankPassedCount(int passes)
 {
-	StoreToAddress(L4D2Direct_GetTankPassedCountAddr(), passes, NumberType_Int32);
+    StoreToAddress(L4D2Direct_GetTankPassedCountAddr(), passes, NumberType_Int32);
 }
 
 /* CDirectorVersusMode Variable access */
@@ -168,9 +168,9 @@ stock void L4D2Direct_SetTankPassedCount(int passes)
  */
 stock int L4D2Direct_GetVSCampaignScore( int teamNumber )
 {
-	if(teamNumber < 0 || teamNumber > 1) return -1;
+    if(teamNumber < 0 || teamNumber > 1) return -1;
 
-	return LoadFromAddress( L4D2Direct_GetVSCampaignScoresAddr() + view_as<Address>(teamNumber * 4), NumberType_Int32 );
+    return LoadFromAddress( L4D2Direct_GetVSCampaignScoresAddr() + view_as<Address>(teamNumber * 4), NumberType_Int32 );
 }
 
 /**
@@ -188,9 +188,9 @@ stock int L4D2Direct_GetVSCampaignScore( int teamNumber )
  */
 stock void L4D2Direct_SetVSCampaignScore( int teamNumber , int score )
 {
-	if(teamNumber < 0 || teamNumber > 1) return;
+    if(teamNumber < 0 || teamNumber > 1) return;
 
-	StoreToAddress( L4D2Direct_GetVSCampaignScoresAddr() + view_as<Address>(teamNumber * 4), score, NumberType_Int32 );
+    StoreToAddress( L4D2Direct_GetVSCampaignScoresAddr() + view_as<Address>(teamNumber * 4), score, NumberType_Int32 );
 }
 
 /**
@@ -206,9 +206,9 @@ stock void L4D2Direct_SetVSCampaignScore( int teamNumber , int score )
  */
 stock float L4D2Direct_GetVSTankFlowPercent( int roundNumber )
 {
-	if(roundNumber < 0 || roundNumber > 1) return -1.0;
+    if(roundNumber < 0 || roundNumber > 1) return -1.0;
 
-	return view_as<float>(LoadFromAddress( L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(roundNumber * 4) , NumberType_Int32 ));
+    return view_as<float>(LoadFromAddress( L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(roundNumber * 4) , NumberType_Int32 ));
 }
 
 /**
@@ -225,9 +225,9 @@ stock float L4D2Direct_GetVSTankFlowPercent( int roundNumber )
  */
 stock void L4D2Direct_SetVSTankFlowPercent( int roundNumber , float flow )
 {
-	if(roundNumber < 0 || roundNumber > 1) return;
+    if(roundNumber < 0 || roundNumber > 1) return;
 
-	StoreToAddress( L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(roundNumber * 4) , view_as<int>(flow) , NumberType_Int32 );
+    StoreToAddress( L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(roundNumber * 4) , view_as<int>(flow) , NumberType_Int32 );
 }
 
 /**
@@ -239,9 +239,9 @@ stock void L4D2Direct_SetVSTankFlowPercent( int roundNumber , float flow )
  */
 stock bool L4D2Direct_GetVSTankToSpawnThisRound( int roundNumber )
 {
-	if(roundNumber < 0 || roundNumber > 1) return false;
+    if(roundNumber < 0 || roundNumber > 1) return false;
 
-	return view_as<bool>(LoadFromAddress( L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(roundNumber) , NumberType_Int8 ));
+    return view_as<bool>(LoadFromAddress( L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(roundNumber) , NumberType_Int8 ));
 }
 
 /**
@@ -256,9 +256,9 @@ stock bool L4D2Direct_GetVSTankToSpawnThisRound( int roundNumber )
  */
 stock void L4D2Direct_SetVSTankToSpawnThisRound( int roundNumber , bool spawn )
 {
-	if(roundNumber < 0 || roundNumber > 1) return;
+    if(roundNumber < 0 || roundNumber > 1) return;
 
-	StoreToAddress( L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(roundNumber) , view_as<int>(spawn), NumberType_Int8 );
+    StoreToAddress( L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(roundNumber) , view_as<int>(spawn), NumberType_Int8 );
 }
 
 /**
@@ -274,9 +274,9 @@ stock void L4D2Direct_SetVSTankToSpawnThisRound( int roundNumber , bool spawn )
  */
 stock float L4D2Direct_GetVSWitchFlowPercent( int roundNumber )
 {
-	if(roundNumber < 0 || roundNumber > 1) return -1.0;
+    if(roundNumber < 0 || roundNumber > 1) return -1.0;
 
-	return view_as<float>(LoadFromAddress( L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(roundNumber * 4) , NumberType_Int32 ));
+    return view_as<float>(LoadFromAddress( L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(roundNumber * 4) , NumberType_Int32 ));
 }
 
 /**
@@ -293,9 +293,9 @@ stock float L4D2Direct_GetVSWitchFlowPercent( int roundNumber )
  */
 stock void L4D2Direct_SetVSWitchFlowPercent( int roundNumber , float flow )
 {
-	if(roundNumber < 0 || roundNumber > 1) return;
+    if(roundNumber < 0 || roundNumber > 1) return;
 
-	StoreToAddress( L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(roundNumber * 4) , view_as<int>(flow) , NumberType_Int32 );
+    StoreToAddress( L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(roundNumber * 4) , view_as<int>(flow) , NumberType_Int32 );
 }
 
 /**
@@ -307,9 +307,9 @@ stock void L4D2Direct_SetVSWitchFlowPercent( int roundNumber , float flow )
  */
 stock bool L4D2Direct_GetVSWitchToSpawnThisRound( int roundNumber )
 {
-	if(roundNumber < 0 || roundNumber > 1) return false;
+    if(roundNumber < 0 || roundNumber > 1) return false;
 
-	return view_as<bool>(LoadFromAddress( L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(roundNumber) , NumberType_Int8 ));
+    return view_as<bool>(LoadFromAddress( L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(roundNumber) , NumberType_Int8 ));
 }
 
 /**
@@ -324,9 +324,9 @@ stock bool L4D2Direct_GetVSWitchToSpawnThisRound( int roundNumber )
  */
 stock void L4D2Direct_SetVSWitchToSpawnThisRound( int roundNumber , bool spawn )
 {
-	if(roundNumber < 0 || roundNumber > 1) return;
+    if(roundNumber < 0 || roundNumber > 1) return;
 
-	StoreToAddress( L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(roundNumber) , view_as<int>(spawn) , NumberType_Int8 );
+    StoreToAddress( L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(roundNumber) , view_as<int>(spawn) , NumberType_Int8 );
 }
 
 /**
@@ -340,14 +340,14 @@ stock void L4D2Direct_SetVSWitchToSpawnThisRound( int roundNumber , bool spawn )
  */
 stock CountdownTimer L4D2Direct_GetVSStartTimer()
 {
-	static Address pVSStartTimer = Address_Null;
-	if(pVSStartTimer == Address_Null)
-	{
-		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::VersusStartTimer");
-		if(offs == -1) return CTimer_Null;
-		pVSStartTimer = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
-	}
-	return view_as<CountdownTimer>(pVSStartTimer);
+    static Address pVSStartTimer = Address_Null;
+    if(pVSStartTimer == Address_Null)
+    {
+        int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorVersusMode::VersusStartTimer");
+        if(offs == -1) return CTimer_Null;
+        pVSStartTimer = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
+    }
+    return view_as<CountdownTimer>(pVSStartTimer);
 }
 
 /* CDirectorScavengeMode Variable access */
@@ -363,14 +363,14 @@ stock CountdownTimer L4D2Direct_GetVSStartTimer()
  */
 stock CountdownTimer L4D2Direct_GetScavengeRoundSetupTimer()
 {
-	static Address pRoundSetupTimer = Address_Null;
-	if(pRoundSetupTimer == Address_Null)
-	{
-		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorScavengeMode::RoundSetupTimer");
-		if(offs == -1) return CTimer_Null;
-		pRoundSetupTimer = L4D2Direct_GetCDirectorScavengeMode() + view_as<Address>(offs);
-	}
-	return view_as<CountdownTimer>(pRoundSetupTimer);
+    static Address pRoundSetupTimer = Address_Null;
+    if(pRoundSetupTimer == Address_Null)
+    {
+        int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorScavengeMode::RoundSetupTimer");
+        if(offs == -1) return CTimer_Null;
+        pRoundSetupTimer = L4D2Direct_GetCDirectorScavengeMode() + view_as<Address>(offs);
+    }
+    return view_as<CountdownTimer>(pRoundSetupTimer);
 }
 
 /**
@@ -384,14 +384,14 @@ stock CountdownTimer L4D2Direct_GetScavengeRoundSetupTimer()
  */
 stock CountdownTimer L4D2Direct_GetScavengeOvertimeGraceTimer()
 {
-	static Address pOvertimeGraceTimer = Address_Null;
-	if(pOvertimeGraceTimer == Address_Null)
-	{
-		int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorScavengeMode::OvertimeGraceTimer");
-		if(offs == -1) return CTimer_Null;
-		pOvertimeGraceTimer = L4D2Direct_GetCDirectorScavengeMode() + view_as<Address>(offs);
-	}
-	return view_as<CountdownTimer>(pOvertimeGraceTimer);
+    static Address pOvertimeGraceTimer = Address_Null;
+    if(pOvertimeGraceTimer == Address_Null)
+    {
+        int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CDirectorScavengeMode::OvertimeGraceTimer");
+        if(offs == -1) return CTimer_Null;
+        pOvertimeGraceTimer = L4D2Direct_GetCDirectorScavengeMode() + view_as<Address>(offs);
+    }
+    return view_as<CountdownTimer>(pOvertimeGraceTimer);
 }
 
 /* TerrorNavMesh Variable access */
@@ -407,7 +407,7 @@ stock CountdownTimer L4D2Direct_GetScavengeOvertimeGraceTimer()
  */
 stock float L4D2Direct_GetMapMaxFlowDistance()
 {
-	return view_as<float>(LoadFromAddress( L4D2Direct_GetMapMaxFlowDistanceAddr() , NumberType_Int32 ));
+    return view_as<float>(LoadFromAddress( L4D2Direct_GetMapMaxFlowDistanceAddr() , NumberType_Int32 ));
 }
 
 /* CTerrorPlayer Variable access */
@@ -422,18 +422,18 @@ stock float L4D2Direct_GetMapMaxFlowDistance()
  */
 stock CountdownTimer L4D2Direct_GetSpawnTimer(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return CTimer_Null;
+    if (client < 1 || client > MaxClients)
+        return CTimer_Null;
 
-	Address pEntityGST = GetEntityAddress(client);
-	if (pEntityGST == Address_Null)
-		return CTimer_Null;
+    Address pEntityGST = GetEntityAddress(client);
+    if (pEntityGST == Address_Null)
+        return CTimer_Null;
 
-	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CTerrorPlayer::SpawnTimer");
-	if (offs == -1)
-		return CTimer_Null;
+    int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CTerrorPlayer::SpawnTimer");
+    if (offs == -1)
+        return CTimer_Null;
 
-	return view_as<CountdownTimer>(pEntityGST + view_as<Address>(offs));
+    return view_as<CountdownTimer>(pEntityGST + view_as<Address>(offs));
 }
 
 /**
@@ -445,18 +445,18 @@ stock CountdownTimer L4D2Direct_GetSpawnTimer(int client)
  */
 stock CountdownTimer L4D2Direct_GetInvulnerabilityTimer(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return CTimer_Null;
+    if (client < 1 || client > MaxClients)
+        return CTimer_Null;
 
-	Address pEntityGInv = GetEntityAddress(client);
-	if (pEntityGInv == Address_Null)
-		return CTimer_Null;
+    Address pEntityGInv = GetEntityAddress(client);
+    if (pEntityGInv == Address_Null)
+        return CTimer_Null;
 
-	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CTerrorPlayer::InvulnerabilityTimer");
-	if (offs == -1)
-		return CTimer_Null;
+    int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "CTerrorPlayer::InvulnerabilityTimer");
+    if (offs == -1)
+        return CTimer_Null;
 
-	return view_as<CountdownTimer>(pEntityGInv + view_as<Address>(offs));
+    return view_as<CountdownTimer>(pEntityGInv + view_as<Address>(offs));
 }
 
 /**
@@ -470,14 +470,14 @@ stock CountdownTimer L4D2Direct_GetInvulnerabilityTimer(int client)
  */
 stock int L4D2Direct_GetTankTickets(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return -1;
+    if (client < 1 || client > MaxClients)
+        return -1;
 
-	int value;
-	if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_iTankTickets", NumberType_Int32, value))
-		return value;
+    int value;
+    if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_iTankTickets", NumberType_Int32, value))
+        return value;
 
-	return -1;
+    return -1;
 }
 
 /**
@@ -490,10 +490,10 @@ stock int L4D2Direct_GetTankTickets(int client)
  */
 stock void L4D2Direct_SetTankTickets(int client, int tickets)
 {
-	if (client < 1 || client > MaxClients)
-		return;
+    if (client < 1 || client > MaxClients)
+        return;
 
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_iTankTickets", NumberType_Int32, tickets);
+    SetEntityValueFromOffset(client, "CTerrorPlayer::m_iTankTickets", NumberType_Int32, tickets);
 }
 
 /**
@@ -505,14 +505,14 @@ stock void L4D2Direct_SetTankTickets(int client, int tickets)
  */
 stock int L4D2Direct_GetShovePenalty(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return -1;
+    if (client < 1 || client > MaxClients)
+        return -1;
 
-	int value;
-	if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_iShovePenalty", NumberType_Int32, value))
-	    return value;
+    int value;
+    if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_iShovePenalty", NumberType_Int32, value))
+        return value;
 
-	return -1;
+    return -1;
 }
 
 /**
@@ -525,10 +525,10 @@ stock int L4D2Direct_GetShovePenalty(int client)
  */
 stock void L4D2Direct_SetShovePenalty(int client, int penalty)
 {
-	if (client < 1 || client > MaxClients)
-		return;
+    if (client < 1 || client > MaxClients)
+        return;
 
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_iShovePenalty", NumberType_Int32, penalty);
+    SetEntityValueFromOffset(client, "CTerrorPlayer::m_iShovePenalty", NumberType_Int32, penalty);
 }
 
 /**
@@ -539,14 +539,14 @@ stock void L4D2Direct_SetShovePenalty(int client, int penalty)
  */
 stock float L4D2Direct_GetNextShoveTime(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return 0.0;
+    if (client < 1 || client > MaxClients)
+        return 0.0;
 
-	int time;
-	if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_fNextShoveTime", NumberType_Int32, time))
-		return view_as<float>(time);
+    int time;
+    if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_fNextShoveTime", NumberType_Int32, time))
+        return view_as<float>(time);
 
-	return 0.0;
+    return 0.0;
 }
 
 /**
@@ -558,10 +558,10 @@ stock float L4D2Direct_GetNextShoveTime(int client)
  */
 stock void L4D2Direct_SetNextShoveTime(int client, float time)
 {
-	if (client < 1 || client > MaxClients)
-		return;
+    if (client < 1 || client > MaxClients)
+        return;
 
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_fNextShoveTime", NumberType_Int32, view_as<int>(time));
+    SetEntityValueFromOffset(client, "CTerrorPlayer::m_fNextShoveTime", NumberType_Int32, view_as<int>(time));
 }
 
 /**
@@ -573,12 +573,12 @@ stock void L4D2Direct_SetNextShoveTime(int client, float time)
  */
 stock int L4D2Direct_GetPreIncapHealth(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return -1;
+    if (client < 1 || client > MaxClients)
+        return -1;
 
-	int value;
-	if (!GetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealth", NumberType_Int32, value)) value = -1;
-	return value;
+    int value;
+    if (!GetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealth", NumberType_Int32, value)) value = -1;
+    return value;
 }
 
 /**
@@ -591,10 +591,10 @@ stock int L4D2Direct_GetPreIncapHealth(int client)
  */
 stock void L4D2Direct_SetPreIncapHealth(int client, int health)
 {
-	if (client < 1 || client > MaxClients)
-		return;
+    if (client < 1 || client > MaxClients)
+        return;
 
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealth", NumberType_Int32, health);
+    SetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealth", NumberType_Int32, health);
 }
 
 /**
@@ -606,12 +606,12 @@ stock void L4D2Direct_SetPreIncapHealth(int client, int health)
  */
 stock int L4D2Direct_GetPreIncapHealthBuffer(int client)
 {
-	if (client < 1 || client > MaxClients)
-		return -1;
+    if (client < 1 || client > MaxClients)
+        return -1;
 
-	int value;
-	if (!GetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealthBuffer", NumberType_Int32, value)) value = -1;
-	return value;
+    int value;
+    if (!GetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealthBuffer", NumberType_Int32, value)) value = -1;
+    return value;
 }
 
 /**
@@ -624,10 +624,10 @@ stock int L4D2Direct_GetPreIncapHealthBuffer(int client)
  */
 stock void L4D2Direct_SetPreIncapHealthBuffer(int client, int health)
 {
-	if (client < 1 || client > MaxClients)
-		return;
+    if (client < 1 || client > MaxClients)
+        return;
 
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealthBuffer", NumberType_Int32, health);
+    SetEntityValueFromOffset(client, "CTerrorPlayer::m_preIncapacitatedHealthBuffer", NumberType_Int32, health);
 }
 
 /**
@@ -638,11 +638,11 @@ stock void L4D2Direct_SetPreIncapHealthBuffer(int client, int health)
  */
 stock int L4D2Direct_GetInfernoMaxFlames(int entity)
 {
-	int flames;
-	if (GetEntityValueFromOffset(entity, "CInferno::m_maxFlames", NumberType_Int32, flames))
-		return flames;
+    int flames;
+    if (GetEntityValueFromOffset(entity, "CInferno::m_maxFlames", NumberType_Int32, flames))
+        return flames;
 
-	return -1;
+    return -1;
 }
 
 /**
@@ -654,7 +654,7 @@ stock int L4D2Direct_GetInfernoMaxFlames(int entity)
  */
 stock void L4D2Direct_SetInfernoMaxFlames(int entity, int flames)
 {
-	SetEntityValueFromOffset(entity, "CInferno::m_maxFlames", NumberType_Int32, flames);
+    SetEntityValueFromOffset(entity, "CInferno::m_maxFlames", NumberType_Int32, flames);
 }
 
 /**
@@ -668,29 +668,29 @@ stock void L4D2Direct_SetInfernoMaxFlames(int entity, int flames)
  */
 stock Address L4D2Direct_GetTerrorNavArea(float pos[3], float beneathLimit = 120.0)
 {
-	static Handle GetNavAreaSDKCall = INVALID_HANDLE;
+    static Handle GetNavAreaSDKCall = INVALID_HANDLE;
 
-	if (GetNavAreaSDKCall == INVALID_HANDLE)
-	{
-		StartPrepSDKCall(SDKCall_Raw);
+    if (GetNavAreaSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Raw);
 
-		if (!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CNavMesh::GetNavArea"))
-		{
-			return Address_Null;
-		}
+        if (!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CNavMesh::GetNavArea"))
+        {
+            return Address_Null;
+        }
 
-		PrepSDKCall_AddParameter(SDKType_Vector, SDKPass_ByRef);
-		PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain);
-		PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
-		GetNavAreaSDKCall = EndPrepSDKCall();
+        PrepSDKCall_AddParameter(SDKType_Vector, SDKPass_ByRef);
+        PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain);
+        PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
+        GetNavAreaSDKCall = EndPrepSDKCall();
 
-		if (GetNavAreaSDKCall == INVALID_HANDLE)
-		{
-			return Address_Null;
-		}
-	}
+        if (GetNavAreaSDKCall == INVALID_HANDLE)
+        {
+            return Address_Null;
+        }
+    }
 
-	return view_as<Address>(SDKCall(GetNavAreaSDKCall, L4D2Direct_GetTerrorNavMesh(), pos, beneathLimit));
+    return view_as<Address>(SDKCall(GetNavAreaSDKCall, L4D2Direct_GetTerrorNavMesh(), pos, beneathLimit));
 }
 
 /**
@@ -702,14 +702,14 @@ stock Address L4D2Direct_GetTerrorNavArea(float pos[3], float beneathLimit = 120
  */
 stock float L4D2Direct_GetTerrorNavAreaFlow(Address pTerrorNavArea)
 {
-	if (pTerrorNavArea == Address_Null)
-		return 0.0;
+    if (pTerrorNavArea == Address_Null)
+        return 0.0;
 
-	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "TerrorNavArea::m_flow");
-	if (offs == -1)
-		return 0.0;
+    int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), "TerrorNavArea::m_flow");
+    if (offs == -1)
+        return 0.0;
 
-	return view_as<float>(LoadFromAddress(pTerrorNavArea + view_as<Address>(offs), NumberType_Int32));
+    return view_as<float>(LoadFromAddress(pTerrorNavArea + view_as<Address>(offs), NumberType_Int32));
 }
 
 /**
@@ -722,29 +722,29 @@ stock float L4D2Direct_GetTerrorNavAreaFlow(Address pTerrorNavArea)
  */
 stock bool L4D2Direct_TryOfferingTankBot(int entity, int bEnterStasis)
 {
-	static Handle TryOfferingTankBotSDKCall = INVALID_HANDLE;
+    static Handle TryOfferingTankBotSDKCall = INVALID_HANDLE;
 
-	if (TryOfferingTankBotSDKCall == INVALID_HANDLE)
-	{
-		StartPrepSDKCall(SDKCall_Raw);
+    if (TryOfferingTankBotSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Raw);
 
-		if (!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CDirector::TryOfferingTankBot"))
-		{
-			return false;
-		}
+        if (!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CDirector::TryOfferingTankBot"))
+        {
+            return false;
+        }
 
-		PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer);
-		PrepSDKCall_AddParameter(SDKType_Bool, SDKPass_Plain);
-		TryOfferingTankBotSDKCall = EndPrepSDKCall();
+        PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer);
+        PrepSDKCall_AddParameter(SDKType_Bool, SDKPass_Plain);
+        TryOfferingTankBotSDKCall = EndPrepSDKCall();
 
-		if (TryOfferingTankBotSDKCall == INVALID_HANDLE)
-		{
-			return false;
-		}
-	}
+        if (TryOfferingTankBotSDKCall == INVALID_HANDLE)
+        {
+            return false;
+        }
+    }
 
-	SDKCall(TryOfferingTankBotSDKCall, L4D2Direct_GetCDirector(), entity, bEnterStasis);
-	return true;
+    SDKCall(TryOfferingTankBotSDKCall, L4D2Direct_GetCDirector(), entity, bEnterStasis);
+    return true;
 }
 
 /**
@@ -756,28 +756,28 @@ stock bool L4D2Direct_TryOfferingTankBot(int entity, int bEnterStasis)
  */
 stock float L4D2Direct_GetFlowDistance(int client)
 {
-	static Handle GetFlowDistanceSDKCall = INVALID_HANDLE;
+    static Handle GetFlowDistanceSDKCall = INVALID_HANDLE;
 
-	if (GetFlowDistanceSDKCall == INVALID_HANDLE)
-	{
-		StartPrepSDKCall(SDKCall_Player);
+    if (GetFlowDistanceSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Player);
 
-		if (!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CTerrorPlayer::GetFlowDistance"))
-		{
-			return 0.0;
-		}
+        if (!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CTerrorPlayer::GetFlowDistance"))
+        {
+            return 0.0;
+        }
 
-		PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
-		PrepSDKCall_SetReturnInfo(SDKType_Float, SDKPass_Plain);
-		GetFlowDistanceSDKCall = EndPrepSDKCall();
+        PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
+        PrepSDKCall_SetReturnInfo(SDKType_Float, SDKPass_Plain);
+        GetFlowDistanceSDKCall = EndPrepSDKCall();
 
-		if (GetFlowDistanceSDKCall == INVALID_HANDLE)
-		{
-			return 0.0;
-		}
-	}
+        if (GetFlowDistanceSDKCall == INVALID_HANDLE)
+        {
+            return 0.0;
+        }
+    }
 
-	return view_as<float>(SDKCall(GetFlowDistanceSDKCall, client, 0));
+    return view_as<float>(SDKCall(GetFlowDistanceSDKCall, client, 0));
 }
 
 /**
@@ -791,26 +791,26 @@ stock float L4D2Direct_GetFlowDistance(int client)
  */
 stock void L4D2Direct_DoAnimationEvent(int client, int event)
 {
-	if(client <= 0 || client > MaxClients+1)
-	{
-		return;
-	}
-	static Handle DoAnimationEventSDKCall = INVALID_HANDLE;
-	if(DoAnimationEventSDKCall == INVALID_HANDLE)
-	{
-		StartPrepSDKCall(SDKCall_Player);
-		if(!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Virtual, "CTerrorPlayer::DoAnimationEvent"))
-		{
-			return;
-		}
-		PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
-		PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
-		DoAnimationEventSDKCall = EndPrepSDKCall();
+    if(client <= 0 || client > MaxClients+1)
+    {
+        return;
+    }
+    static Handle DoAnimationEventSDKCall = INVALID_HANDLE;
+    if(DoAnimationEventSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Player);
+        if(!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Virtual, "CTerrorPlayer::DoAnimationEvent"))
+        {
+            return;
+        }
+        PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
+        PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
+        DoAnimationEventSDKCall = EndPrepSDKCall();
 
-		if(DoAnimationEventSDKCall == INVALID_HANDLE)
-		{
-			return;
-		}
-	}
-	SDKCall(DoAnimationEventSDKCall, client, event, 0);
+        if(DoAnimationEventSDKCall == INVALID_HANDLE)
+        {
+            return;
+        }
+    }
+    SDKCall(DoAnimationEventSDKCall, client, event, 0);
 }

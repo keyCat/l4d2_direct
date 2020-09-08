@@ -44,12 +44,12 @@
 
 enum CountdownTimer
 {
-	CTimer_Null = 0 /**< Invalid Timer when lookup fails */
+    CTimer_Null = 0 /**< Invalid Timer when lookup fails */
 };
 
 enum IntervalTimer
 {
-	ITimer_Null = 0 /**< Invalid Timer when lookup fails */
+    ITimer_Null = 0 /**< Invalid Timer when lookup fails */
 };
 
 /* CountdownTimer funcs */
@@ -63,7 +63,7 @@ enum IntervalTimer
  */
 stock void CTimer_Reset( CountdownTimer timer )
 {
-	CTimer_SetTimestamp( timer , GetGameTime() + CTimer_GetDuration( timer ) );
+    CTimer_SetTimestamp( timer , GetGameTime() + CTimer_GetDuration( timer ) );
 }
 
 /**
@@ -76,8 +76,8 @@ stock void CTimer_Reset( CountdownTimer timer )
  */
 stock void CTimer_Start( CountdownTimer timer , float duration )
 {
-	CTimer_SetTimestamp( timer , GetGameTime() + duration );
-	CTimer_SetDuration( timer , duration );
+    CTimer_SetTimestamp( timer , GetGameTime() + duration );
+    CTimer_SetDuration( timer , duration );
 }
 
 /**
@@ -89,7 +89,7 @@ stock void CTimer_Start( CountdownTimer timer , float duration )
  */
 stock void CTimer_Invalidate( CountdownTimer timer )
 {
-	CTimer_SetTimestamp( timer , -1.0 );
+    CTimer_SetTimestamp( timer , -1.0 );
 }
 
 /**
@@ -101,7 +101,7 @@ stock void CTimer_Invalidate( CountdownTimer timer )
  */
 stock bool CTimer_HasStarted( CountdownTimer timer )
 {
-	return CTimer_GetTimestamp( timer ) >= 0.0;
+    return CTimer_GetTimestamp( timer ) >= 0.0;
 }
 
 /**
@@ -113,7 +113,7 @@ stock bool CTimer_HasStarted( CountdownTimer timer )
  */
 stock bool CTimer_IsElapsed( CountdownTimer timer )
 {
-	return GetGameTime() >= CTimer_GetTimestamp( timer );
+    return GetGameTime() >= CTimer_GetTimestamp( timer );
 }
 
 /**
@@ -125,7 +125,7 @@ stock bool CTimer_IsElapsed( CountdownTimer timer )
  */
 stock float CTimer_GetElapsedTime( CountdownTimer timer )
 {
-	return ( GetGameTime() - CTimer_GetTimestamp( timer ) ) + CTimer_GetDuration( timer );
+    return ( GetGameTime() - CTimer_GetTimestamp( timer ) ) + CTimer_GetDuration( timer );
 }
 
 /**
@@ -137,7 +137,7 @@ stock float CTimer_GetElapsedTime( CountdownTimer timer )
  */
 stock float CTimer_GetRemainingTime( CountdownTimer timer )
 {
-	return CTimer_GetTimestamp( timer ) - GetGameTime();
+    return CTimer_GetTimestamp( timer ) - GetGameTime();
 }
 
 /**
@@ -149,7 +149,7 @@ stock float CTimer_GetRemainingTime( CountdownTimer timer )
  */
 stock float CTimer_GetCountdownDuration( CountdownTimer timer )
 {
-	return ( CTimer_GetTimestamp( timer ) > 0.0 ) ? CTimer_GetDuration( timer ) : 0.0;
+    return ( CTimer_GetTimestamp( timer ) > 0.0 ) ? CTimer_GetDuration( timer ) : 0.0;
 }
 
 /* IntervalTimer funcs */
@@ -163,7 +163,7 @@ stock float CTimer_GetCountdownDuration( CountdownTimer timer )
  */
 stock void ITimer_Reset( IntervalTimer timer )
 {
-	ITimer_SetTimestamp( timer , GetGameTime() );
+    ITimer_SetTimestamp( timer , GetGameTime() );
 }
 
 /**
@@ -177,7 +177,7 @@ stock void ITimer_Reset( IntervalTimer timer )
  */
 stock void ITimer_Start( IntervalTimer timer )
 {
-	ITimer_SetTimestamp( timer , GetGameTime() );
+    ITimer_SetTimestamp( timer , GetGameTime() );
 }
 
 /**
@@ -189,7 +189,7 @@ stock void ITimer_Start( IntervalTimer timer )
  */
 stock void ITimer_Invalidate( IntervalTimer timer )
 {
-	ITimer_SetTimestamp( timer , -1.0 );
+    ITimer_SetTimestamp( timer , -1.0 );
 }
 
 /**
@@ -201,7 +201,7 @@ stock void ITimer_Invalidate( IntervalTimer timer )
  */
 stock bool ITimer_HasStarted( IntervalTimer timer )
 {
-	return ( ITimer_GetTimestamp( timer ) > 0.0 );
+    return ( ITimer_GetTimestamp( timer ) > 0.0 );
 }
 
 /**
@@ -213,7 +213,7 @@ stock bool ITimer_HasStarted( IntervalTimer timer )
  */
 stock float ITimer_GetElapsedTime( IntervalTimer timer )
 {
-	return ITimer_HasStarted( timer ) ? GetGameTime() - ITimer_GetTimestamp(timer) : 99999.9;
+    return ITimer_HasStarted( timer ) ? GetGameTime() - ITimer_GetTimestamp(timer) : 99999.9;
 }
 
 /* Timer Internals */
@@ -221,35 +221,35 @@ stock float ITimer_GetElapsedTime( IntervalTimer timer )
 // Read duration variable in CTimer
 static stock float CTimer_GetDuration( CountdownTimer timer )
 {
-	return view_as<float>(LoadFromAddress( view_as<Address>(timer) + CTIMER_DURATION_OFFSET , NumberType_Int32 ));
+    return view_as<float>(LoadFromAddress( view_as<Address>(timer) + CTIMER_DURATION_OFFSET , NumberType_Int32 ));
 }
 
 // Set duration variable in CTimer
 static stock void CTimer_SetDuration( CountdownTimer timer , float duration )
 {
-	StoreToAddress( view_as<Address>(timer) + CTIMER_DURATION_OFFSET , view_as<int>(duration) , NumberType_Int32 );
+    StoreToAddress( view_as<Address>(timer) + CTIMER_DURATION_OFFSET , view_as<int>(duration) , NumberType_Int32 );
 }
 
 // Read timestamp variable in CTimer
 static stock float CTimer_GetTimestamp( CountdownTimer timer )
 {
-	return view_as<float>(LoadFromAddress( view_as<Address>(timer) + CTIMER_TIMESTAMP_OFFSET , NumberType_Int32 ));
+    return view_as<float>(LoadFromAddress( view_as<Address>(timer) + CTIMER_TIMESTAMP_OFFSET , NumberType_Int32 ));
 }
 
 // Set timestamp variable in CTimer
 static stock void CTimer_SetTimestamp( CountdownTimer timer , float timestamp )
 {
-	StoreToAddress( view_as<Address>(timer) + CTIMER_TIMESTAMP_OFFSET , view_as<int>(timestamp) , NumberType_Int32 );
+    StoreToAddress( view_as<Address>(timer) + CTIMER_TIMESTAMP_OFFSET , view_as<int>(timestamp) , NumberType_Int32 );
 }
 
 // Read timestamp variable in ITimer
 static stock float ITimer_GetTimestamp( IntervalTimer timer )
 {
-	return view_as<float>(LoadFromAddress( view_as<Address>(timer) + ITIMER_TIMESTAMP_OFFSET , NumberType_Int32 ));
+    return view_as<float>(LoadFromAddress( view_as<Address>(timer) + ITIMER_TIMESTAMP_OFFSET , NumberType_Int32 ));
 }
 
 // Set timestamp variable in ITimer
 static stock void ITimer_SetTimestamp( IntervalTimer timer , float timestamp )
 {
-	StoreToAddress( view_as<Address>(timer) + ITIMER_TIMESTAMP_OFFSET , view_as<int>(timestamp) , NumberType_Int32 );
+    StoreToAddress( view_as<Address>(timer) + ITIMER_TIMESTAMP_OFFSET , view_as<int>(timestamp) , NumberType_Int32 );
 }
