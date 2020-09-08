@@ -194,6 +194,28 @@ stock void L4D2Direct_SetVSCampaignScore( int teamNumber , int score )
 }
 
 /**
+ * Resets scores for teams.
+ *
+ * @note Calls CDirector::ClearScavengeScores and CDirectorVersusMode::ClearTeamScoresNonVirtual, so you don't have to worry about game modes yourself
+ * @noreturn
+ */
+stock void L4D2_Direct_ResetTeamScores()
+{
+    static Handle ClearTeamScoresSDKCall = INVALID_HANDLE;
+    if(ClearTeamScoresSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Raw);
+        if(!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CDirector::ClearTeamScores"))
+        {
+            return;
+        }
+        PrepSDKCall_AddParameter(SDKType_Bool, SDKPass_Plain);
+        ClearTeamScoresSDKCall = EndPrepSDKCall();
+    }
+    SDKCall(ClearTeamScoresSDKCall, L4D2Direct_GetCDirector(), 1);
+}
+
+/**
  * Reads the tank flow percent for a given round for versus mode
  *
  * @note You should check GetVSTankToSpawnThisRound to find out if a tank is going to be spawned for this round.
@@ -813,4 +835,82 @@ stock void L4D2Direct_DoAnimationEvent(int client, int event)
         }
     }
     SDKCall(DoAnimationEventSDKCall, client, event, 0);
+}
+
+/**
+ * Changes level (map) using CDirector.
+ *
+ * @note Does NOT validate map name. Use FindMap for that.
+ * @note Does NOT reset team scores automatically, set second parameter to true if this is desirable.
+ * @param mapname
+ * @param resetScore
+ * @noreturn
+ */
+stock void L4D2_Direct_ChangeLevel(const char[] mapname, bool resetScore=false)
+{
+    static Handle ChangeLevelSDKCall = INVALID_HANDLE;
+    if(ChangeLevelSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Raw);
+        if(!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CDirector::OnChangeChapterVote"))
+        {
+            return;
+        }
+        PrepSDKCall_AddParameter(SDKType_String, SDKPass_Pointer);
+        ChangeLevelSDKCall = EndPrepSDKCall();
+    }
+    if(resetScore)
+    {
+    	L4D2_Direct_ResetTeamScores();
+    }
+    SDKCall(ChangeLevelSDKCall, L4D2Direct_GetCDirector(), mapname);
+}
+
+/**
+ * Changes map to the first level of a given mission (campaign).
+ *
+ * @note Mission name is a mission file name from "L4D2C1" (Dead Center) through "L4D2C13" (Cold Stream)
+ * @note https://developer.valvesoftware.com/wiki/List_of_L4D2_Missions_Files
+ * @param mission
+ * @noreturn
+ */
+stock void L4D2_Direct_ChangeMission(const char[] mission)
+{
+    static Handle ChangeMissionSDKCall = INVALID_HANDLE;
+    if(ChangeMissionSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Raw);
+        if(!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CDirector::OnChangeMissionVote"))
+        {
+            return;
+        }
+        PrepSDKCall_AddParameter(SDKType_String, SDKPass_Pointer);
+        ChangeMissionSDKCall = EndPrepSDKCall();
+    }
+    SDKCall(ChangeMissionSDKCall, L4D2Direct_GetCDirector(), mission);
+}
+
+/**
+ * Writes in a given buffer the base game-mode of a current `mp_gamemode`. One of: "coop", "versus", "scavenge", "survival", "realism".
+ * Useful during mutation game-types to deduct the base game mode without any hassle.
+ *
+ * @note https://developer.valvesoftware.com/wiki/L4D2_Gamemodes.txt_File
+ * @param buffer
+ * @param maxlength
+ * @noreturn
+ */
+stock void L4D2_Direct_GetGameModeBase(char[] buffer, int maxlength)
+{
+    static Handle GetGameModeBaseSDKCall = INVALID_HANDLE;
+    if(GetGameModeBaseSDKCall == INVALID_HANDLE)
+    {
+        StartPrepSDKCall(SDKCall_Raw);
+        if(!PrepSDKCall_SetFromConf(L4D2Direct_GetGameConf(), SDKConf_Signature, "CDirector::GetGameModeBase"))
+        {
+            return;
+        }
+        PrepSDKCall_SetReturnInfo(SDKType_String, SDKPass_Pointer);
+        GetGameModeBaseSDKCall = EndPrepSDKCall();
+    }
+    SDKCall(GetGameModeBaseSDKCall, L4D2Direct_GetCDirector(), buffer, maxlength);
 }
